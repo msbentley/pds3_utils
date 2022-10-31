@@ -46,7 +46,7 @@ def index_products(directory='.', pattern='*.lbl', recursive=True):
     labels = select_files(pattern, directory=directory, recursive=recursive)
 
     cols = ['filename', 'dataset', 'mission_id', 'prod_id', 'start_time', 'stop_time', 'instr_id']
-    index = pd.DataFrame([], columns=cols)
+    index = []
 
     for label in labels:
 
@@ -61,7 +61,7 @@ def index_products(directory='.', pattern='*.lbl', recursive=True):
         stop_time = lbl['STOP_TIME']
         stop_time = pd.to_datetime(stop_time)
 
-        index = index.append({
+        index.append({
             'filename': label,
             'dataset': dataset,
             'prod_id': prod_id,
@@ -69,7 +69,10 @@ def index_products(directory='.', pattern='*.lbl', recursive=True):
             'start_time': start_time,
             'stop_time': stop_time,
             'instr_id': instr_id
-            }, ignore_index=True)
+            })
+
+
+    index = pd.DataFrame.from_records(index)
 
     # make sure timestamps are stripped of timezones
     index.start_time=pd.to_datetime(index.start_time.fillna(pd.NaT)).dt.tz_localize(None)
@@ -165,7 +168,7 @@ class Database:
                             # using the index keyword
                             array_idx = path.get('index')
                             if array_idx is not None and result is not None:
-                                result = result[array_idx]
+                                result = list(result)[array_idx]
 
                             # there are also values which have attached units. for simplicity we check for this
                             # and simply return the value
