@@ -1,5 +1,3 @@
-name: Publish tagged versions to PyPi
-
 on: push
 
 jobs:
