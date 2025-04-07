@@ -4,6 +4,8 @@ jobs:
   build-n-publish:
     name: Publish tagged versions to PyPi
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
 
     steps:
     - uses: actions/checkout@master
