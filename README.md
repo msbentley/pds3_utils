@@ -1,5 +1,5 @@
 # pds3_utils
-A module of utilities to work with PDS3 data, built on top of pdr.
+A module of utilities to work with PDS3 data, built on top of pvl.
 
 
 ## Dependencies
