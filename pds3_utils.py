@@ -36,7 +36,7 @@ default_config = os.path.join(
 
 
 
-def index_products(directory='.', pattern='*.lbl', recursive=True):
+def index_products(directory='.', pattern='*.LBL', recursive=True):
     """
     Accepts a directory containing PDS3 products, indexes the labels and returns a 
     Pandas data-frame containng meta-data for each product.
@@ -122,7 +122,7 @@ class Database:
         for instr_id in instr_ids:
 
             if instr_id not in self.config.keys():
-                log.warn('no configuration found for instrument ID {:s}, skipping ingestion'.format(prod_type))
+                log.warn('no configuration found for instrument ID {:s}, skipping ingestion'.format(instr_id))
                 continue
 
             rules = self.config[instr_id]
@@ -306,7 +306,6 @@ def select_files(wildcard, directory='.', recursive=False):
         selectfiles = locate(wildcard, directory)
         filelist = [file for file in selectfiles]
     else:
-        import glob
         filelist = glob.glob(os.path.join(directory, wildcard))
 
     filelist.sort()
